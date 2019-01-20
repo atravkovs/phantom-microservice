@@ -23,12 +23,6 @@ fs.readFile(input, 'utf8', (err, json) => {
     
     const options = { spaces: 4 };
 
-    // console.log(convert.js2xml(js, options));
-
-    fs.writeFile('./test.json', JSON.stringify(js), (err) => {
-        if (err) throw err;
-    });
-
     fs.writeFile(output, convert.js2xml(js, options), (err) => {
         if (err) throw err;
     });
