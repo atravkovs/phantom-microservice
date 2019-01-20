@@ -35,7 +35,7 @@ function requestPage(url, callback) {
 
     page.open(url, (status) => {
         if (status !== 'success') console.log(':(');
-        // page.render(`screenshots/${Date.now()}.jpeg`, {format: 'jpeg', quality: '100'});
+        page.render(`screenshots/${Date.now()}.jpeg`, {format: 'jpeg', quality: '100'});
         const element = page.evaluate(getElemInfo, null);
 
         callback(element);
@@ -45,29 +45,25 @@ function requestPage(url, callback) {
 function getElemInfo(el) {
     if (!el) el = document.querySelector('BODY');
 
+    
     const data = {
         tag: el.nodeName,
         boundaries: el.getBoundingClientRect(),
         id: el.getAttribute('id'),
     };
-
+    
     const textTags = ['P', 'TD'];
 
     if (textTags.includes(el.nodeName)) data.text = el.textContent;
 
-    if (el.children.length > 0) {
-        const childrens = [];
-        
-        for (let i = 0; i < el.children.length; i++) {
-            const child = el.children.item(i);
-            const result = getElemInfo(child);
+    let childrens = [];
+    for (let i = 0; i < el.children.length; i++) {
+        const child = el.children.item(i);
+        const result = getElemInfo(child);
 
-            if (result)
-                childrens.push(result);
-        }
-
-        Object.assign(data, { childrens });
+        if (result)
+            childrens = childrens.concat(result);
     }
 
-    return data;
+    return [data, ...childrens];
 }

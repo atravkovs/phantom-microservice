@@ -6,12 +6,12 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
     "jsdom": "^12.2.0",
+    "sqlite3": "^4.0.4",
     "tfjs": "^0.6.0"
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node index.js",
-    "phantom": "phantomjs phantom.js"
+    "start": "phantomjs phantom.js"
   },
   "author": "",
   "license": "ISC"
